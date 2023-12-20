@@ -1,0 +1,65 @@
+<template>
+    <lightning-card title="Custom Meta Data">
+       <template for:each={metadata} for:item="button">
+           <button
+                    key={button.Id}
+                    data-key={button.Id}
+                    label={button.Label}
+                    onclick={handleButtonClick}
+                    class="slds-button slds-button_neutral custom-button"
+                    style={button.style}
+                    
+            >{button.DeveloperName}</button> 
+     </template>
+     <template if:true={isModalOpen}>
+
+        <section role="dialog" 
+           tabindex="-1" 
+           aria-labelledby="modal-heading-01" 
+           aria-modal="true" 
+           aria-describedby="modal-content-id-1" 
+           class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+            <header class="slds-modal__header">
+              <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{header}</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+             <lightning-input label="Subject" type="text" value={subject} ></lightning-input>
+             <lightning-input label="NextDate" type="date"  onchange={handleChange}></lightning-input>
+             <lightning-combobox label="Action Type" name="Action Type" value={Value} options={ActionTypes} onchange={handleChange}></lightning-combobox>
+             <lightning-input-rich-text label="Rich test" value={richTest} onchange={handleChange}></lightning-input-rich-text>
+
+            </div>
+            <footer class="slds-modal__footer">
+              <lightning-button label="Cancel" onclick={hideModal}></lightning-button>
+              <lightning-button label="Save" variant="brand" onclick={saveModal}></lightning-button>
+              <lightning-button label="Delete" variant="destructive" onclick={deleteModel} ></lightning-button>
+            </footer>
+          </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+      </template>
+      <template if:true={showConfirmationModal}>
+        <div class="slds-backdrop showConfirmationBackdrop slds-backdrop_open"></div>
+        <section role="dialog" 
+                 tabindex="-1" 
+                 aria-labelledby="modal-heading-02" 
+                 aria-modal="true" 
+                 aria-describedby="modal-content-id-2" 
+                 class="slds-modal slds-fade-in-open confirmation-modal">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Confirm Cancellation</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p>Do you Want to Cancel</p>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleCancelConfirmation} >No</button>
+                    <button class="slds-button slds-button_brand" onclick={handleCancel} >Yes</button>
+                </div>
+            </div>
+        </section>
+    </template>
+</lightning-card>
+</template>
